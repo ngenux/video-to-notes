@@ -1,2 +1,0 @@
-print('k')
-print('l')
