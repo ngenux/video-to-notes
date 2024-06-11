@@ -10,3 +10,12 @@ def download_youtube_video(video_url, output_path):
         filename = f"{video_id}.mp4"  # Video format (default)
     video.download(output_path,filename=filename)
     return filename
+
+# def download_youtube_video(video_url, output_path):
+#     # Download the YouTube video
+#     youtube = pytube.YouTube(video_url)
+#     video = youtube.streams.get_highest_resolution()
+#     video.download(output_path)
+# video_url = "https://www.youtube.com/watch?v=iXCqIpDZ_IY"
+# output_path = "./testing"
+# download_youtube_video(video_url, output_path)
