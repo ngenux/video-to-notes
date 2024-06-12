@@ -9,9 +9,19 @@ on:
       - main
 
 jobs:
+  pytest:
+    name: test_cases
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run pytest
+        run: |
+          pip install pytest
+          pytest
+
   deploy_lambda:
     name: Deploy to Lambda
     runs-on: ubuntu-latest
+    needs: test_cases
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2

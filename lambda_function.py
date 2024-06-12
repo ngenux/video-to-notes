@@ -114,25 +114,28 @@ def lambda_handler(event, context):
         data = io.BytesIO(response_text.encode())
         s3_client.upload_fileobj(data, Bucket=bucket_name, Key=s3_notes_path)
         logger.info(f"The notes have been written to notes.md and uploaded to the S3 bucket '{bucket_name}' in path {s3_notes_path}.")
-
+        return{
+            'statuscode':200,
+            'body':json.dumps(f"The notes have been written to notes.md and uploaded to the S3 bucket '{bucket_name}' in path {s3_notes_path}.")
+        }
     except Exception as e:
         logger.error(f"Error in lambda_handler: {e}")
         raise
-# event = {
-#     "Records": [
-#         {
-#             "s3": {
-#                 "bucket": {
-#                     "name": "videos-summary" 
-#                 },
-#                 "object": {
-#                     "key": "Algebra Formulas/transcript.json"
-#                 }
-#             }
-#         }
-#     ]
-# }
+event = {
+    "Records": [
+        {
+            "s3": {
+                "bucket": {
+                    "name": "videos-summary" 
+                },
+                "object": {
+                    "key": "Algebra Formulas/transcript.json"
+                }
+            }
+        }
+    ]
+}
 
-# testing CICD
+# testing CICD 123
 
 lambda_handler(event,"s")
