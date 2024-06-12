@@ -1,3 +1,39 @@
+# name: Build and Deploy
+
+# on:
+#   push:
+#     branches:
+#       - srikanth_dev
+#   pull_request:
+#     branches:
+#       - main
+# jobs:
+#   deploy_lambda:
+#     name: Deploy to Lambda
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v2
+
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v2
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: us-east-1
+
+#       - name: Archive Production Artifacts
+#         run: zip -r lambda_function.zip lambda_function.py
+
+#       - name: Deploy Lambda Function
+#         run: aws lambda update-function-code --function-name test_deployment --zip-file fileb://lambda_function.zip
+
+#       - name: Attach Policy to Lambda Function Role
+#       run: |
+#         ROLE_NAME=$(aws lambda get-function --function-name test_deployment --query 'Configuration.Role' --output text | cut -d '/' -f 2)
+#         aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+#         aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+
 name: Build and Deploy
 
 on:
@@ -7,28 +43,29 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   deploy_lambda:
     name: Deploy to Lambda
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-        - name: Configure AWS Credentials
-          uses: aws-actions/configure-aws-credentials@v2
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: us-east-1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-        - name: Archive Production Artifacts
-          run: zip -r lambda_function.zip lambda_function.py
+      - name: Archive Production Artifacts
+        run: zip -r lambda_function.zip lambda_function.py
 
-        - name: Deploy Lambda Function
-          run: aws lambda update-function-code --function-name test_deployment --zip-file fileb://lambda_function.zip
+      - name: Deploy Lambda Function
+        run: aws lambda update-function-code --function-name test_deployment --zip-file fileb://lambda_function.zip
 
-        - name: Attach Policy to Lambda Function Role
+      - name: Attach Policy to Lambda Function Role
         run: |
           ROLE_NAME=$(aws lambda get-function --function-name test_deployment --query 'Configuration.Role' --output text | cut -d '/' -f 2)
           aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
