@@ -68,5 +68,5 @@ jobs:
       - name: Attach Policy to Lambda Function Role
         run: |
           ROLE_NAME=$(aws lambda get-function --function-name test_deployment --query 'Configuration.Role' --output text | cut -d '/' -f 2)
-          aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/test_deployment-role-nppnexym/AWSLambdaBasicExecutionRole
-          aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/test_deployment-role-nppnexym/AmazonS3FullAccess
+          aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AWSLambdaBasicExecutionRole
+          aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
