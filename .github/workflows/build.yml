@@ -21,7 +21,7 @@ jobs:
   deploy_lambda:
     name: Deploy to Lambda
     runs-on: ubuntu-latest
-    needs: test_cases
+    needs: pytest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
