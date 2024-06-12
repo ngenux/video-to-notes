@@ -102,7 +102,6 @@ def lambda_handler(event, context):
         # Parse the response from the Bedrock API
         response_body = json.loads(response.get('body').read())
         response_text = response_body['content'][0]['text']
-        print(response_text,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
         logger.info(f'Response text: {response_text}')
 
         # Define the S3 path for the notes file
