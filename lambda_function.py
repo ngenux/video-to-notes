@@ -119,6 +119,7 @@ def lambda_handler(event, context):
         logger.error(f"Error in lambda_handler: {e}")
         raise
 
+
 event = {
     "Records": [
         {
