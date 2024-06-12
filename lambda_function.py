@@ -4,7 +4,6 @@ import os
 import io
 import logging
 import urllib
-import time
 
 # Set up logging
 logger = logging.getLogger()
@@ -88,8 +87,6 @@ def lambda_handler(event, context):
             "messages": messages
         })
         
-        s_time = time.time()
-        print(s_time,">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         try:
             # Invoke the Bedrock API
             response = bedrock_runtime.invoke_model(
@@ -105,10 +102,7 @@ def lambda_handler(event, context):
         # Parse the response from the Bedrock API
         response_body = json.loads(response.get('body').read())
         response_text = response_body['content'][0]['text']
-        e_time = time.time()
-        print(e_time,"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-        print(e_time - s_time)
-        print(response_text)
+        print(response_text,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
         logger.info(f'Response text: {response_text}')
 
         # Define the S3 path for the notes file
@@ -141,4 +135,4 @@ event = {
     ]
 }
 
-lambda_handler(event,"S")
+lambda_handler(event,"s")
