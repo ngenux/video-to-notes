@@ -12,7 +12,13 @@ logger.setLevel(logging.INFO)
 def lambda_handler(event, context):
     try:
         # Initialize the S3 client
-        s3_client = boto3.client('s3')
+        aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
+        aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+        s3_client = boto3.client(
+        's3',
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key
+        )
 
         # Extract bucket name and file path from the event
         bucket_name = event['Records'][0]['s3']['bucket']['name']
