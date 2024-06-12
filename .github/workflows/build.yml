@@ -32,4 +32,8 @@ jobs:
       - name: Attach Policy to Lambda Function Role
         run: |
           ROLE_NAME="test_deployment-role-nppnexym"
+<<<<<<< HEAD
           aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+=======
+          aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+>>>>>>> 183f9debaee74f69a8553d63ca10a029708ae621
