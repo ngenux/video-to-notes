@@ -13,6 +13,7 @@ jobs:
     name: test_cases
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: install pytest
         run: pip install pytest
       - name: Run pytest
