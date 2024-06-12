@@ -15,7 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: install pytest
-        run: pip install pytest
+        run: |
+          pip install pytest
+          pip install boto3
       - name: Run pytest
         run: pytest
 
