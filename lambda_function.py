@@ -4,6 +4,7 @@ import os
 import io
 import logging
 import urllib
+import botocore.exceptions
 
 # Set up logging
 logger = logging.getLogger()
