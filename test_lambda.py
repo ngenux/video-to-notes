@@ -160,9 +160,9 @@ class TestLambdaFunction(unittest.TestCase):
 
         # Mock S3 client behavior
         mock_s3_client = MagicMock()
-        mock_s3_client.get_object.return_value = {
-            'Body': MagicMock()
-        }
+        mock_body = MagicMock()
+        mock_body.read.return_value = '{"text": "Sample transcript"}'
+        mock_s3_client.get_object.return_value = {'Body': mock_body}
         mock_boto_client.return_value = mock_s3_client
 
         # Run lambda_handler
@@ -171,6 +171,7 @@ class TestLambdaFunction(unittest.TestCase):
         # Assertions
         self.assertEqual(result['statuscode'], 200)
         self.assertIn('notes have been written to notes.md', result['body'])
+
 
 if __name__ == '__main__':
     unittest.main()
