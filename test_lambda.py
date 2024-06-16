@@ -134,6 +134,43 @@ class TestLambdaFunction(unittest.TestCase):
             aws_secret_access_key='test_secret'
         )
         self.assertEqual(client, mock_boto_client.return_value)
+    
+    @patch('boto3.client')
+    def test_lambda_handler_success(self, mock_boto_client):
+        # Mock event and context
+        event = {
+            "Records": [
+                {
+                    "s3": {
+                        "bucket": {
+                            "name": "videos-summary"
+                        },
+                        "object": {
+                            "key": "Algebra Formulas/transcript.json"
+                        }
+                    }
+                }
+            ]
+        }
+        context = MagicMock()
+
+        # Patch environment variables
+        os.environ['AWS_ACCESS_KEY_ID'] = 'test_key'
+        os.environ['AWS_SECRET_ACCESS_KEY'] = 'test_secret'
+
+        # Mock S3 client behavior
+        mock_s3_client = MagicMock()
+        mock_s3_client.get_object.return_value = {
+            'Body': MagicMock()
+        }
+        mock_boto_client.return_value = mock_s3_client
+
+        # Run lambda_handler
+        result = lambda_handler(event, context)
+
+        # Assertions
+        self.assertEqual(result['statuscode'], 200)
+        self.assertIn('notes have been written to notes.md', result['body'])
 
 if __name__ == '__main__':
     unittest.main()
