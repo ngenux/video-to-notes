@@ -165,12 +165,23 @@ class TestLambdaFunction(unittest.TestCase):
         mock_s3_client.get_object.return_value = {'Body': mock_body}
         mock_boto_client.return_value = mock_s3_client
 
+        # Mock Bedrock runtime client behavior
+        mock_bedrock_runtime = MagicMock()
+        mock_response = MagicMock()
+        mock_response.get.return_value = MagicMock()
+        mock_response.get.return_value.read.return_value = json.dumps({
+            "content": [{"text": "Sample response"}]
+        })
+        mock_bedrock_runtime.invoke_model.return_value = mock_response
+
         # Run lambda_handler
         result = lambda_handler(event, context)
 
         # Assertions
         self.assertEqual(result['statuscode'], 200)
         self.assertIn('notes have been written to notes.md', result['body'])
+
+
 
 
 if __name__ == '__main__':
