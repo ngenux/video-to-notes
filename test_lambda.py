@@ -117,6 +117,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 import boto3
 import os
+import json
 from lambda_function import initialize_s3_client,lambda_handler
 
 class TestLambdaFunction(unittest.TestCase):
